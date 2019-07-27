@@ -1,2 +1,2 @@
 # OctaveConv_Caffe
-A Caffe Implementation for Octave Convolution
+This repository contains a Caffe implementation of the paper Drop an Octave: Reducing Spatial Redundancy in Convolutional Neural Networks with Octave Convolution.

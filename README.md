@@ -15,7 +15,7 @@ Here is a performance on the scene classification task of resnet18 in [AI Challe
    CUDA8.0  
    cudnn5.0  
 ### How to build 
-Modify caffe.proto like this：  
+Modify [caffe.proto](https://github.com/BVLC/caffe/blob/master/src/caffe/proto/caffe.proto) like this：  
 Add option in LayerParameter.
 ```
 message LayerParameter {
@@ -44,3 +44,7 @@ message OctaveUpsampleParameter {
   optional uint32 upsample_w = 7;
 }
 ```
+### How to use  
+Reference OctaveUpsample layer in [resnet18_octave_0.5_train.prototxt](https://github.com/chaipangpang/OctaveConv_Caffe/blob/master/model_example/Resnet18/resnet18_octave_0.5_train.prototxt).  
+
+## Reference

@@ -3,8 +3,8 @@ This repository contains a [Caffe](https://github.com/BVLC/caffe) implementation
 ## OctaveUpsample
 Provide octaveupsample layer to support octave convlution.  
 1.forward:    
- ![](https://github.com/chaipangpang/OctaveConv_Caffe/blob/master/pics/forward.jpg  )
+ ![forward](https://github.com/chaipangpang/OctaveConv_Caffe/blob/master/pics/forward.jpg )
 2.backward:  
- ![](https://github.com/chaipangpang/OctaveConv_Caffe/blob/master/pics/backward.jpg  )
+ ![backword](https://github.com/chaipangpang/OctaveConv_Caffe/blob/master/pics/backward.jpg  )
 ## Example 
 ## Usage  

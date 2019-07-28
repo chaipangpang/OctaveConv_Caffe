@@ -1,48 +1,9 @@
-name: "resnet18_octave_0.5_train"
-
-layer {
-  name: "data"
-  type: "Data"
-  top: "data"
-  top: "label"
-  include {
-    phase: TRAIN
-  }
-  transform_param {
-    mirror: true
-    mean_value: 127.5
-    mean_value: 127.5
-    mean_value: 127.5
-    scale: 0.0078125
-  }
-  data_param {
-    source: "./TrainData"
-    batch_size: 64
-    backend: LMDB
-  }
-}
-layer {
-  name: "data"
-  type: "Data"
-  top: "data"
-  top: "label"
-  include {
-    phase: TEST
-  }
-  transform_param {
-    mirror: false
-    mean_value: 127.5
-    mean_value: 127.5
-    mean_value: 127.5
-    scale: 0.0078125
-
-  }
-  data_param {
-    source: "./ValData"
-    batch_size: 64
-    backend: LMDB
-  }
-}
+name: "resnet18_octave_0.25_deploy"
+input: "blob1"
+input_dim: 1
+input_dim: 3
+input_dim: 224
+input_dim: 224
 
 
 #####################conv1 start#######################
@@ -50,7 +11,7 @@ layer {
 layer {
   name: "conv1"
   type: "Convolution"
-  bottom: "data"
+  bottom: "blob1"
   top: "conv1"
   convolution_param {
     num_output: 64
@@ -82,7 +43,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -130,7 +91,7 @@ layer {
   bottom: "max_pool1"
   top: "conv2_hf"
   convolution_param {
-    num_output: 32
+    num_output: 48
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -159,7 +120,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -207,7 +168,7 @@ layer {
   bottom: "pool2_lf"
   top: "conv2_lf"
   convolution_param {
-    num_output: 32
+    num_output: 16
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -236,7 +197,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -270,7 +231,7 @@ layer {
   bottom: "conv2_hf"
   top: "conv3_hf"
   convolution_param {
-    num_output: 32
+    num_output: 48
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -299,7 +260,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -340,7 +301,7 @@ layer {
   bottom: "pool3_hf"
   top: "conv3_hf_add"
   convolution_param {
-    num_output: 32
+    num_output: 16
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -369,7 +330,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -397,7 +358,7 @@ layer {
   bottom: "conv2_lf"
   top: "conv3_lf"
   convolution_param {
-    num_output: 32
+    num_output: 16
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -426,7 +387,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -454,7 +415,7 @@ layer {
   bottom: "conv2_lf"
   top: "conv3_lf_add"
   convolution_param {
-    num_output: 32
+    num_output: 48
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -483,7 +444,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -511,8 +472,6 @@ layer {
   top: "conv3_lf_add_upsample"
   octaveupsample_param {
       scale: 2
-      upsample_h:56
-      upsample_w:56
   }
 }
 
@@ -573,7 +532,7 @@ layer {
   bottom: "fuse3_hf_add"
   top: "conv4_hf"
   convolution_param {
-    num_output: 32
+    num_output: 48
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -602,7 +561,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -648,7 +607,7 @@ layer {
   bottom: "pool4_hf"
   top: "conv4_hf_add"
   convolution_param {
-    num_output: 32
+    num_output: 16
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -677,7 +636,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -710,7 +669,7 @@ layer {
   bottom: "fuse3_lf_add"
   top: "conv4_lf"
   convolution_param {
-    num_output: 32
+    num_output: 16
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -739,7 +698,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -772,7 +731,7 @@ layer {
   bottom: "fuse3_lf_add"
   top: "conv4_lf_add"
   convolution_param {
-    num_output: 32
+    num_output: 48
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -801,7 +760,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -860,7 +819,7 @@ layer {
   bottom: "fuse4_hf"
   top: "conv5_hf"
   convolution_param {
-    num_output: 32
+    num_output: 48
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -889,7 +848,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -930,7 +889,7 @@ layer {
   bottom: "pool5_hf"
   top: "conv5_hf_add"
   convolution_param {
-    num_output: 32
+    num_output: 16
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -959,7 +918,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -987,7 +946,7 @@ layer {
   bottom: "fuse4_lf"
   top: "conv5_lf"
   convolution_param {
-    num_output: 32
+    num_output: 16
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -1016,7 +975,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -1043,7 +1002,7 @@ layer {
   bottom: "fuse4_lf"
   top: "conv5_lf_add"
   convolution_param {
-    num_output: 32
+    num_output: 48
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -1072,7 +1031,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -1161,7 +1120,7 @@ layer {
   bottom: "fuse5_hf_add"
   top: "conv6_hf"
   convolution_param {
-    num_output: 64
+    num_output: 96
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -1190,7 +1149,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -1235,7 +1194,7 @@ layer {
   bottom: "pool6_hf"
   top: "conv6_hf_add"
   convolution_param {
-    num_output: 64
+    num_output: 32
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -1264,7 +1223,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -1297,7 +1256,7 @@ layer {
   bottom: "fuse5_lf_add"
   top: "conv6_lf"
   convolution_param {
-    num_output: 64
+    num_output: 32
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -1326,7 +1285,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -1360,7 +1319,7 @@ layer {
   bottom: "fuse5_lf_add"
   top: "conv6_lf_add"
   convolution_param {
-    num_output: 64
+    num_output: 96
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -1389,7 +1348,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -1447,7 +1406,7 @@ layer {
   bottom: "fuse6_hf"
   top: "conv7_hf"
   convolution_param {
-    num_output: 64
+    num_output: 96
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -1476,7 +1435,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -1516,7 +1475,7 @@ layer {
   bottom: "pool7_hf"
   top: "conv7_hf_add"
   convolution_param {
-    num_output: 64
+    num_output: 32
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -1545,7 +1504,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -1573,7 +1532,7 @@ layer {
   bottom: "fuse6_lf"
   top: "conv7_lf"
   convolution_param {
-    num_output: 64
+    num_output: 32
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -1602,7 +1561,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -1629,7 +1588,7 @@ layer {
   bottom: "fuse6_lf"
   top: "conv7_lf_add"
   convolution_param {
-    num_output: 64
+    num_output: 96
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -1658,7 +1617,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -1710,7 +1669,7 @@ layer {
   bottom: "fuse5_hf_add"
   top: "conv8_hf"
   convolution_param {
-    num_output: 64
+    num_output: 96
     bias_term: false
     pad: 0
     kernel_size: 1
@@ -1739,7 +1698,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -1766,7 +1725,7 @@ layer {
   bottom: "fuse5_lf_add"
   top: "conv8_lf"
   convolution_param {
-    num_output: 64
+    num_output: 32
     bias_term: false
     pad: 0
     kernel_size: 1
@@ -1795,7 +1754,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -1857,7 +1816,7 @@ layer {
   bottom: "fuse8_hf_add"
   top: "conv9_hf"
   convolution_param {
-    num_output: 64
+    num_output: 96
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -1886,7 +1845,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -1931,7 +1890,7 @@ layer {
   bottom: "pool9_hf"
   top: "conv9_hf_add"
   convolution_param {
-    num_output: 64
+    num_output: 32
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -1960,7 +1919,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -1993,7 +1952,7 @@ layer {
   bottom: "fuse8_lf_add"
   top: "conv9_lf"
   convolution_param {
-    num_output: 64
+    num_output: 32
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -2022,7 +1981,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -2055,7 +2014,7 @@ layer {
   bottom: "fuse8_lf_add"
   top: "conv9_lf_add"
   convolution_param {
-    num_output: 64
+    num_output: 96
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -2084,7 +2043,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -2141,7 +2100,7 @@ layer {
   bottom: "fuse9_hf"
   top: "conv10_hf"
   convolution_param {
-    num_output: 64
+    num_output: 96
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -2170,7 +2129,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -2210,7 +2169,7 @@ layer {
   bottom: "pool10_hf"
   top: "conv10_hf_add"
   convolution_param {
-    num_output: 64
+    num_output: 32
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -2239,7 +2198,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -2266,7 +2225,7 @@ layer {
   bottom: "fuse9_lf"
   top: "conv10_lf"
   convolution_param {
-    num_output: 64
+    num_output: 32
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -2295,7 +2254,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -2322,7 +2281,7 @@ layer {
   bottom: "fuse9_lf"
   top: "conv10_lf_add"
   convolution_param {
-    num_output: 64
+    num_output: 96
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -2351,7 +2310,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -2438,7 +2397,7 @@ layer {
   bottom: "fuse10_hf_add"
   top: "conv11_hf"
   convolution_param {
-    num_output: 128
+    num_output: 192
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -2467,7 +2426,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -2512,7 +2471,7 @@ layer {
   bottom: "pool11_hf"
   top: "conv11_hf_add"
   convolution_param {
-    num_output: 128
+    num_output: 64
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -2541,7 +2500,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -2574,7 +2533,7 @@ layer {
   bottom: "fuse10_lf_add"
   top: "conv11_lf"
   convolution_param {
-    num_output: 128
+    num_output: 64
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -2603,7 +2562,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -2637,7 +2596,7 @@ layer {
   bottom: "fuse10_lf_add"
   top: "conv11_lf_add"
   convolution_param {
-    num_output: 128
+    num_output: 192
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -2666,7 +2625,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -2725,7 +2684,7 @@ layer {
   bottom: "fuse11_hf"
   top: "conv12_hf"
   convolution_param {
-    num_output: 128
+    num_output: 192
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -2754,7 +2713,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -2794,7 +2753,7 @@ layer {
   bottom: "pool12_hf"
   top: "conv12_hf_add"
   convolution_param {
-    num_output: 128
+    num_output: 64
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -2823,7 +2782,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -2850,7 +2809,7 @@ layer {
   bottom: "fuse11_lf"
   top: "conv12_lf"
   convolution_param {
-    num_output: 128
+    num_output: 64
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -2879,7 +2838,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -2906,7 +2865,7 @@ layer {
   bottom: "fuse11_lf"
   top: "conv12_lf_add"
   convolution_param {
-    num_output: 128
+    num_output: 192
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -2935,7 +2894,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -2982,17 +2941,13 @@ layer {
   top: "fuse12_lf"
 }
 
-
-
-
-
 layer {
   name: "conv13_hf"
   type: "Convolution"
   bottom: "fuse10_hf_add"
   top: "conv13_hf"
   convolution_param {
-    num_output: 128
+    num_output: 192
     bias_term: false
     pad: 0
     kernel_size: 1
@@ -3021,7 +2976,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -3048,7 +3003,7 @@ layer {
   bottom: "fuse10_lf_add"
   top: "conv13_lf"
   convolution_param {
-    num_output: 128
+    num_output: 64
     bias_term: false
     pad: 0
     kernel_size: 1
@@ -3077,7 +3032,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -3140,7 +3095,7 @@ layer {
   bottom: "fuse13_hf_add"
   top: "conv14_hf"
   convolution_param {
-    num_output: 128
+    num_output: 192
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -3169,7 +3124,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -3214,7 +3169,7 @@ layer {
   bottom: "pool14_hf"
   top: "conv14_hf_add"
   convolution_param {
-    num_output: 128
+    num_output: 64
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -3243,7 +3198,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -3276,7 +3231,7 @@ layer {
   bottom: "fuse13_lf_add"
   top: "conv14_lf"
   convolution_param {
-    num_output: 128
+    num_output: 64
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -3305,7 +3260,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -3338,7 +3293,7 @@ layer {
   bottom: "fuse13_lf_add"
   top: "conv14_lf_add"
   convolution_param {
-    num_output: 128
+    num_output: 192
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -3367,7 +3322,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -3424,7 +3379,7 @@ layer {
   bottom: "fuse14_hf"
   top: "conv15_hf"
   convolution_param {
-    num_output: 128
+    num_output: 192
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -3453,7 +3408,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -3493,7 +3448,7 @@ layer {
   bottom: "pool15_hf"
   top: "conv15_hf_add"
   convolution_param {
-    num_output: 128
+    num_output: 64
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -3522,7 +3477,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -3549,7 +3504,7 @@ layer {
   bottom: "fuse14_lf"
   top: "conv15_lf"
   convolution_param {
-    num_output: 128
+    num_output: 64
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -3578,7 +3533,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -3605,7 +3560,7 @@ layer {
   bottom: "fuse14_lf"
   top: "conv15_lf_add"
   convolution_param {
-    num_output: 128
+    num_output: 192
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -3634,7 +3589,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -3721,7 +3676,7 @@ layer {
   bottom: "fuse15_hf_add"
   top: "conv16_hf"
   convolution_param {
-    num_output: 256
+    num_output: 384
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -3750,7 +3705,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -3795,7 +3750,7 @@ layer {
   bottom: "pool16_hf"
   top: "conv16_hf_add"
   convolution_param {
-    num_output: 256
+    num_output: 128
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -3824,7 +3779,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -3857,7 +3812,7 @@ layer {
   bottom: "fuse15_lf_add"
   top: "conv16_lf"
   convolution_param {
-    num_output: 256
+    num_output: 128
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -3886,7 +3841,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -3920,7 +3875,7 @@ layer {
   bottom: "fuse15_lf_add"
   top: "conv16_lf_add"
   convolution_param {
-    num_output: 256
+    num_output: 384
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -3949,7 +3904,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -4009,7 +3964,7 @@ layer {
   bottom: "fuse16_hf"
   top: "conv17_hf"
   convolution_param {
-    num_output: 256
+    num_output: 384
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -4038,7 +3993,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -4078,7 +4033,7 @@ layer {
   bottom: "pool17_hf"
   top: "conv17_hf_add"
   convolution_param {
-    num_output: 256
+    num_output: 128
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -4107,7 +4062,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -4134,7 +4089,7 @@ layer {
   bottom: "fuse16_lf"
   top: "conv17_lf"
   convolution_param {
-    num_output: 256
+    num_output: 128
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -4163,7 +4118,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -4190,7 +4145,7 @@ layer {
   bottom: "fuse16_lf"
   top: "conv17_lf_add"
   convolution_param {
-    num_output: 256
+    num_output: 384
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -4219,7 +4174,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -4277,7 +4232,7 @@ layer {
   bottom: "fuse15_hf_add"
   top: "conv18_hf"
   convolution_param {
-    num_output: 256
+    num_output: 384
     bias_term: false
     pad: 0
     kernel_size: 1
@@ -4306,7 +4261,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -4333,7 +4288,7 @@ layer {
   bottom: "fuse15_lf_add"
   top: "conv18_lf"
   convolution_param {
-    num_output: 256
+    num_output: 128
     bias_term: false
     pad: 0
     kernel_size: 1
@@ -4362,7 +4317,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -4424,7 +4379,7 @@ layer {
   bottom: "fuse18_hf_add"
   top: "conv19_hf"
   convolution_param {
-    num_output: 256
+    num_output: 384
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -4453,7 +4408,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -4498,7 +4453,7 @@ layer {
   bottom: "pool19_hf"
   top: "conv19_hf_add"
   convolution_param {
-    num_output: 256
+    num_output: 128
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -4527,7 +4482,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -4560,7 +4515,7 @@ layer {
   bottom: "fuse18_lf_add"
   top: "conv19_lf"
   convolution_param {
-    num_output: 256
+    num_output: 128
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -4589,7 +4544,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -4622,7 +4577,7 @@ layer {
   bottom: "fuse18_lf_add"
   top: "conv19_lf_add"
   convolution_param {
-    num_output: 256
+    num_output: 384
     bias_term: false
     pad: 1
     kernel_size: 3
@@ -4651,7 +4606,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -4738,7 +4693,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -4795,7 +4750,7 @@ layer {
      decay_mult: 0
   }
   batch_norm_param {
-    use_global_stats: false
+    use_global_stats: true
     eps: 9.999999747378752e-06
   }
 }
@@ -4876,7 +4831,6 @@ layer {
   bottom: "fuse20_hf_add"
   top: "fuse20_hf_add"
 }
-
 #####################res8 end#######################
 layer {
   name: "ave_pool1"
@@ -4915,24 +4869,8 @@ layer {
 }
 layer {
     bottom: "fc2"
-    bottom: "label"
-    name: "loss"
-    type: "SoftmaxWithLoss"
-    top: "loss"
-    loss_weight:1
-    include {
-    phase: TRAIN
-  }
-}
-
-layer {
-    bottom: "fc2"
-    bottom: "label"
-    top: "acc"
-    name: "acc"
-    type: "Accuracy"
-    include {
-        phase: TEST
-    }
+    name: "fc2_prob"
+    type: "Softmax"
+    top: "fc2_prob"
 }
 

@@ -47,4 +47,9 @@ message OctaveUpsampleParameter {
 ### How to use  
 Reference OctaveUpsample layer in [resnet18_octave_0.5_train.prototxt](https://github.com/chaipangpang/OctaveConv_Caffe/blob/master/model_example/Resnet18/resnet18_octave_0.5_train.prototxt).  
 
-## Reference
+## Reference  
+Caffe:[pooling layer](https://github.com/BVLC/caffe/blob/master/src/caffe/layers/pooling_layer.cpp)  
+caffe-segnet-cudnn5:[upsample layer](https://github.com/TimoSaemann/caffe-segnet-cudnn5/blob/master/src/caffe/layers/upsample_layer.cpp)   
+[OctaveConv_pytorch](https://github.com/lxtGH/OctaveConv_pytorch)  
+[OctaveConv](https://github.com/terrychenism/OctaveConv)  
+

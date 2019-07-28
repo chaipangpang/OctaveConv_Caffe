@@ -7,7 +7,7 @@ Forward:
 Backward:   
 <img src="https://github.com/chaipangpang/OctaveConv_Caffe/blob/master/pics/backward.jpg" width="447" height="200" alt="backward"/>  
 ## Example  
-Here is a performance on the scene classification task of resnet18 in [AI Challenger](https://challenger.ai/?lan=zh)
+Here is a performance on the scene classification task of resnet18 in [AI Challenger](https://challenger.ai/?lan=zh).More other models are coming soon.  
 <img src="https://github.com/chaipangpang/OctaveConv_Caffe/blob/master/pics/acc.jpg" width="612" height="335" alt="top-3 acc"/>  
 ## Usage  
 ### Prerequisites  
@@ -48,8 +48,8 @@ message OctaveUpsampleParameter {
 Reference OctaveUpsample layer in [resnet18_octave_0.5_train.prototxt](https://github.com/chaipangpang/OctaveConv_Caffe/blob/master/model_example/Resnet18/resnet18_octave_0.5_train.prototxt).  
 
 ## Reference  
-Caffe:[pooling layer](https://github.com/BVLC/caffe/blob/master/src/caffe/layers/pooling_layer.cpp)  
-caffe-segnet-cudnn5:[upsample layer](https://github.com/TimoSaemann/caffe-segnet-cudnn5/blob/master/src/caffe/layers/upsample_layer.cpp)   
-[OctaveConv_pytorch](https://github.com/lxtGH/OctaveConv_pytorch)  
-[OctaveConv](https://github.com/terrychenism/OctaveConv)  
+1.Caffe:[pooling layer](https://github.com/BVLC/caffe/blob/master/src/caffe/layers/pooling_layer.cpp)  
+2.caffe-segnet-cudnn5:[upsample layer](https://github.com/TimoSaemann/caffe-segnet-cudnn5/blob/master/src/caffe/layers/upsample_layer.cpp)   
+3.[OctaveConv_pytorch](https://github.com/lxtGH/OctaveConv_pytorch)  
+4.[OctaveConv](https://github.com/terrychenism/OctaveConv)  
 

@@ -7,7 +7,8 @@ Forward:
 Backward:   
 <img src="https://github.com/chaipangpang/OctaveConv_Caffe/blob/master/pics/backward.jpg" width="447" height="200" alt="backward"/>  
 ## Example  
-Here is a performance on the scene classification task of resnet18 in [AI Challenger](https://challenger.ai/?lan=zh).More other models are coming soon.  
+Here is a performance on the scene classification task of resnet18 in [AI Challenger](https://challenger.ai/?lan=zh).The experiment did not use any data augmentation without mirror, and did not load the pre-training model.  
+More other models are coming soon.  
 <img src="https://github.com/chaipangpang/OctaveConv_Caffe/blob/master/pics/acc.jpg" width="612" height="335" alt="top-3 acc"/>  
 ## Usage  
 ### Prerequisites  

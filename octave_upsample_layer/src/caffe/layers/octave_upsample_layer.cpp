@@ -155,7 +155,7 @@ void OctaveUpsampleLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
 
 
 #ifdef CPU_ONLY
-STUB_GPU(UpsampleLayer);
+STUB_GPU(OctaveUpsampleLayer);
 #endif
 
 INSTANTIATE_CLASS(OctaveUpsampleLayer);

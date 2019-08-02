@@ -1,7 +1,7 @@
 # OctaveConv_Caffe
 This repository contains a [Caffe](https://github.com/BVLC/caffe) implementation of the paper [Drop an Octave: Reducing Spatial Redundancy in Convolutional Neural Networks with Octave Convolution](https://arxiv.org/abs/1904.05049).  
 ## OctaveUpsample
-Provide octaveupsample layer to support octave convolution.  
+Provide [octaveupsample layer](https://github.com/chaipangpang/OctaveConv_Caffe/tree/master/octave_upsample_layer) to support octave convolution.  
 Forward:    
  <img src="https://github.com/chaipangpang/OctaveConv_Caffe/blob/master/pics/forward.jpg" width="447" height="220" alt="forward"/>    
 Backward:   

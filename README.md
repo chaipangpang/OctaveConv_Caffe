@@ -12,9 +12,9 @@ More other models are coming soon.
 <img src="https://github.com/chaipangpang/OctaveConv_Caffe/blob/master/pics/acc.jpg" width="612" height="335" alt="top-3 acc"/>  
 ## Usage  
 ### Prerequisites  
-   Caffe  
-   CUDA8.0  
-   cudnn5.0  
+[Caffe](https://github.com/BVLC/caffe)    
+[CUDA8.0](https://developer.nvidia.com/cuda-toolkit)  
+[cudnn5.0](https://docs.nvidia.com/deeplearning/sdk/cudnn-install/)     
 ### How to build 
 Modify [caffe.proto](https://github.com/BVLC/caffe/blob/master/src/caffe/proto/caffe.proto) like this：  
 Add option in LayerParameter.
